@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guitar Tabs</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #111; color: #fff; margin: 0; }
+    header { padding: 20px; background: #222; text-align: center; font-size: 28px; font-weight: bold; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; padding: 20px; }
+    .card { background: #1b1b1b; border-radius: 12px; padding: 15px; cursor: pointer; transition: 0.2s; }
+    .card:hover { transform: scale(1.03); }
+    .cover { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; }
+    .title { font-size: 20px; margin: 10px 0 5px 0; }
+    .difficulty { opacity: 0.7; font-size: 14px; }
+    .tab-container { padding: 20px; }
+    pre { white-space: pre-wrap; background: #222; padding: 20px; border-radius: 10px; }
+    a.back { display: inline-block; margin-bottom: 20px; color: #4fa3ff; }
+  </style>
+</head>
+<body>
+<header>Guitar Tabs</header>
+<div id="app"></div>
+<script>
+async function loadSongs() {
+    const indexFile = await fetch('data/index.json');
+    return await indexFile.json();
+}
+async function loadTab(file) {
+    const tabFile = await fetch('data/' + file);
+    return await tabFile.text();
+}
+function showHome(songs) {
+    const app = document.getElementById('app');
+    app.innerHTML = '<div class="grid">' + songs.map(song => `
+      <div class="card" onclick="openTab('${song.file}', '${song.title}', '${song.cover}', '${song.difficulty}')">
+        <img class="cover" src="${song.cover}" alt="Cover">
+        <div class="title">${song.title}</div>
+        <div class="difficulty">Difficulty: ${song.difficulty}</div>
+      </div>
+    `).join('') + '</div>';
+}
+async function openTab(file, title, cover, difficulty) {
+    const app = document.getElementById('app');
+    const content = await loadTab(file);
+    app.innerHTML = `
+        <div class="tab-container">
+            <a href="#" class="back" onclick="init()">← Back</a>
+            <h2>${title}</h2>
+            <p>Difficulty: ${difficulty}</p>
+            <img class="cover" src="${cover}" style="width:200px;border-radius:10px;" />
+            <pre>${content}</pre>
+        </div>
+    `;
+}
+async function init() {
+    const songs = await loadSongs();
+    showHome(songs);
+}
+init();
+</script>
+</body>
+</html>
