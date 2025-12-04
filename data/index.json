@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Wonderwall",
+    "difficulty": "Easy",
+    "cover": "data/wonderwall.jpg",
+    "file": "wonderwall.txt"
+  },
+  {
+    "title": "Thinking Out Loud",
+    "difficulty": "Medium",
+    "cover": "data/thinking.jpg",
+    "file": "thinking.txt"
+  }
+]
