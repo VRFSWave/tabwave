@@ -1,9 +1,9 @@
 [
   {
-    "title": "Wonderwall",
+    "title": "Chase - Park Drive",
     "difficulty": "Easy",
-    "cover": "data/wonderwall.jpg",
-    "file": "wonderwall.txt"
+    "cover": "data/chase.jpg",
+    "file": "chase.txt"
   },
   {
     "title": "Thinking Out Loud",
